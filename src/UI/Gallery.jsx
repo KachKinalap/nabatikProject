@@ -18,7 +18,7 @@ const Gallery = (props) => {
     }
     getAsset()
     return (
-            <SafeAreaView>
+            <SafeAreaView style={{marginTop:40, marginBottom:30}}>
                 {
                     assets
                         ?
@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
-        borderColor:'#000',
-        borderWidth:4
     },
     textLoad:{
         flex:1,
