@@ -1,28 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Geoposition from "./src/components/Geoposition";
+import {SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import React from "react";
-import CameraView from "./src/components/CameraView";
-import Gallery from "./src/UI/Gallery";
-import Login from "./src/components/Login";
+import LoginRouter from "./src/components/LoginRouter";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/*<Geoposition/>*/}
-      {/*<CameraView/>*/}
-      {/*<Gallery/>*/}
-      {/*<Popup/>*/}
-      <Login/>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <LoginRouter/>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-});
+  container:{
+    width:Dimensions.get('window').width,
+    height:Dimensions.get('window').height,
+
+  }
+})
