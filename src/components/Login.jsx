@@ -4,22 +4,27 @@ import PostService from '../API/PostService'
 import MyInput from "../UI/MyInput";
 import '@react-navigation/native'
 
-const Login = (props, navigation) => {
+const Login = (props, {navigation}) => {
 
     const [token, setToken] = useState('')
     const [login, setLogin] = useState('')
     const [pass, setPass] = useState('')
 
-    const Auth = (userLogin, password)=> {
-        const response = PostService.getToken(userLogin, password)
+    const Auth = async (userLogin, password)=> {
+        const response =  await PostService.getToken(userLogin, password)
         console.log(response)
-
-        //console.log(token._W)
-        //console.log(token)
-        // if(token){
-        //     props.action()
-        // }
-
+        if(response.data.success===true)
+            props.setIsAuth(true)
+        else
+        {}
+        // navigation.navigate('MainMenu')
+        // // we should remove arrow "back"
+        // navigation.reset(
+        //     {
+        //         index: 0,
+        //         routes: [{ name: 'MainMenu' }],
+        //     }
+        // )
     }
 
     return (
@@ -36,8 +41,12 @@ const Login = (props, navigation) => {
                 label={'password'}
                 onChange={setPass}
             />
-            <Button title={'батон'} onPress={()=>Auth(login, pass)}/>
-            <Button title={'батон2'} onPress={()=>console.log(token)}/>
+            <Button
+                title={'button'}
+                onPress={()=>{
+                    Auth(login, pass)
+
+                }}/>
         </View>
     );
 };

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View, Alert, Pressable} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
-import {Modal} from "react-native-web";
 
 const CameraPreview = (props) => {
 

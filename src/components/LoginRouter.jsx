@@ -1,30 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./Login";
 import MainMenu from "./MainMenu";
 
-const LoginRouter = ({ navigation }) => {
-
+const LoginRouter = () => {
+    const [isAuth, setIsAuth] = useState(false)
     const Stack = createNativeStackNavigator();
 
-    const slideToMain = ()=>{
-        navigation.navigate('MainMenu')
-    }
+    // const slideToMain = ()=>{
+    //     navigation.navigate('MainMenu')
+    // }
 
     return (
         <View style={styles.container}>
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen
-                    name="Login"
-                    component={() => <Login action={slideToMain}/>}
-                />
-                <Stack.Screen
-                    name="MainMenu"
-                    component={MainMenu}
-                />
+                {
+                    isAuth
+                    ?
+                        <Stack.Screen
+                            name="MainMenu"
+                            component={MainMenu}
+                        />
+                    :
+                        <Stack.Screen
+                            name="Login"
+                            component={()=><Login setIsAuth={setIsAuth}/>}
+                        />
+                }
+
+
             </Stack.Navigator>
         </NavigationContainer>
         </View>
