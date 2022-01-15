@@ -4,6 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./Login";
 import MainMenu from "./MainMenu";
+import CameraView from "./CameraView";
+import History from "./History";
+import Settings from "./Settings";
 
 const LoginRouter = () => {
     const [isAuth, setIsAuth] = useState(false)
@@ -16,23 +19,39 @@ const LoginRouter = () => {
     return (
         <View style={styles.container}>
         <NavigationContainer>
-            <Stack.Navigator>
+
                 {
                     isAuth
                     ?
-                        <Stack.Screen
-                            name="MainMenu"
-                            component={MainMenu}
-                        />
+                        <Stack.Navigator>
+                            <Stack.Screen
+                                name="MainMenu"
+                                component={MainMenu}
+                            />
+                            <Stack.Screen
+                                name="Camera"
+                                component={CameraView}
+                            />
+                            <Stack.Screen
+                                name="History"
+                                component={History}
+                            />
+                            <Stack.Screen
+                                name="Settings"
+                                component={Settings}
+                            />
+                        </Stack.Navigator>
                     :
-                        <Stack.Screen
-                            name="Login"
-                            component={()=><Login setIsAuth={setIsAuth}/>}
-                        />
+                        <Stack.Navigator>
+                            <Stack.Screen
+                                name="Login"
+                                component={()=><Login setIsAuth={setIsAuth}/>}
+                            />
+                        </Stack.Navigator>
                 }
 
 
-            </Stack.Navigator>
+
         </NavigationContainer>
         </View>
     );
