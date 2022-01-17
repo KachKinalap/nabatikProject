@@ -54,6 +54,7 @@ const CameraView = localUri => {
     }
     // var for camera object
     let camera
+
     return (
         <View style={styles.container}>
             {(previewVisible && capturedImage) ?
@@ -68,7 +69,7 @@ const CameraView = localUri => {
                     style={styles.camera}
                     type={type}
                     ref={(ref) => {
-                        camera = ref
+                        camera=ref
                     }}
                 >
                     <View style={styles.buttonContainer}>
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        fontSize: 18,
+        fontSize: 24,
         color: 'white',
     },
 });

@@ -7,6 +7,7 @@ import MainMenu from "./MainMenu";
 import CameraView from "./CameraView";
 import History from "./History";
 import Settings from "./Settings";
+import Gallery from "../UI/Gallery";
 
 const LoginRouter = () => {
     const [isAuth, setIsAuth] = useState(false)
@@ -34,11 +35,11 @@ const LoginRouter = () => {
                             />
                             <Stack.Screen
                                 name="History"
-                                component={History}
+                                component={Gallery}
                             />
                             <Stack.Screen
                                 name="Settings"
-                                component={Settings}
+                                component={()=><Settings setIsAuth={setIsAuth}/>}
                             />
                         </Stack.Navigator>
                     :

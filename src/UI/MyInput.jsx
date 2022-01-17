@@ -12,6 +12,7 @@ const MyInput = (props) => {
                     secureTextEntry={props.secure}
                     onChangeText={text=>props.onChange(text)}
                     value={props.value?props.value:''}
+                    keyboardType={props.keyType?props.keyType:'default'}
                 />
             </View>
         </View>
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
         alignItems:'flex-start',
     },
     input: {
-        borderColor:'sandybrown',
+        borderColor:'#06c9f3',
         borderWidth:2,
         width:250,
         height:40,

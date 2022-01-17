@@ -9,17 +9,20 @@ const MainMenu = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.iconsCont}>
                 <View style={styles.backImage}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Camera')}>
+                    <Text style={styles.labelItem}>Take a photo</Text>
+                    <TouchableOpacity style={{marginTop:5}} onPress={()=>navigation.navigate('Camera')}>
                         <Image source={require('../Images/camera.png')}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.backImage}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('History')}>
+                    <Text style={styles.labelItem}>History</Text>
+                    <TouchableOpacity style={{marginTop:5}} onPress={()=>navigation.navigate('History')}>
                         <Image source={require('../Images/history.png')}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.backImage}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Settings')}>
+                    <Text style={styles.labelItem}>Settings</Text>
+                    <TouchableOpacity style={{marginTop:5}} onPress={()=>navigation.navigate('Settings')}>
                         <Image source={require('../Images/settings.png')}/>
                     </TouchableOpacity>
                 </View>
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#1e390a'
+        backgroundColor:'#06c9f3'
     },
     iconsCont:{
         height:'80%',
@@ -41,13 +44,17 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     backImage:{
-        backgroundColor:'#90c900',
+        backgroundColor:'#06c9f3',
         width:140,
         height:140,
         display:'flex',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius:50
+    },
+    labelItem:{
+        fontSize:16,
+        fontWeight:'700'
     }
 })
 

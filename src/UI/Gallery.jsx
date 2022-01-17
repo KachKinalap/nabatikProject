@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Text, StyleSheet, ScrollView, FlatList} from 'react-native'
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
 import GalleryItem from "./GalleryItem";
+import PhotoPreview from "./PhotoPreview";
 
 
 const Gallery = (props) => {
 
+    //need change to name from CameraView
     const nameAlbum = 'TreesNabatikProject'
+
+    //photos
     const [assets, setAssets] = useState(null)
+
+    //getting photos for preview
     const getAsset = async ()=>{
         const getAlbum = await MediaLibrary.getAlbumAsync(nameAlbum)
         const result = await MediaLibrary.getAssetsAsync({
@@ -16,24 +22,43 @@ const Gallery = (props) => {
         })
         setAssets(result.assets)
     }
-    getAsset()
+    useEffect(()=>{
+        getAsset()
+    },[])
+
+    //whether photoPreview or not
+    const [isPreview, setIsPreview] = useState(false)
+    const [currPhoto, setCurrPhoto] = useState(null)
     return (
-            <SafeAreaView style={{marginTop:40, marginBottom:30}}>
+            <SafeAreaView>
                 {
-                    assets
+                    isPreview
+                    ?
+                    <PhotoPreview photo={currPhoto} previewOff={setIsPreview}/>
+                    :
+                        assets
                         ?
-                <ScrollView
-                    contentContainerStyle={styles.scrollCont}
-                >
-                    {
-                        assets.map(asset =>
-                            <GalleryItem currPhoto={asset} key={asset.filename}/>
-                        )
-                    }
-                </ScrollView>
+                        <ScrollView
+                            contentContainerStyle={styles.scrollCont}
+                        >
+                            {
+                                assets.map(asset =>
+                                    <TouchableOpacity
+                                        style={{marginTop:10}}
+                                        onPress={()=>{
+                                            setCurrPhoto(asset)
+                                            setIsPreview(true)
+                                    }}>
+                                        <GalleryItem currPhoto={asset} key={asset.filename}/>
+                                    </TouchableOpacity>
+                                )
+                            }
+                        </ScrollView>
                         :
                         <Text style={styles.textLoad}>Gallery is loading, wait a second...</Text>
+
                 }
+
 
             </SafeAreaView>
     );
@@ -41,7 +66,6 @@ const Gallery = (props) => {
 
 const styles = StyleSheet.create({
     scrollCont:{
-
         display:'flex',
         flexDirection:'row',
         flexWrap:'wrap',

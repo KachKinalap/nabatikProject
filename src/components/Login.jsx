@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import PostService from '../API/PostService'
 import MyInput from "../UI/MyInput";
 import '@react-navigation/native'
@@ -29,6 +29,7 @@ const Login = (props, {navigation}) => {
 
     return (
         <View style={styles.container}>
+            <Text style={{fontSize:24, marginBottom:40}}>Welcome to the Nabatik project!</Text>
             <MyInput
                 value={login}
                 secure={false}
@@ -41,12 +42,16 @@ const Login = (props, {navigation}) => {
                 label={'password'}
                 onChange={setPass}
             />
-            <Button
-                title={'button'}
+            <TouchableOpacity
+                style={styles.button}
                 onPress={()=>{
                     Auth(login, pass)
 
-                }}/>
+                }}>
+                <Text style={{fontSize:18}}>
+                    Enter
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -56,6 +61,16 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center'
+    },
+    button:{
+        backgroundColor:'#06c9f3',
+        width:160,
+        height:60,
+        margin:30,
+        borderRadius:6,
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 
