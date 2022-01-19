@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#06c9f3'
+
     },
     iconsCont:{
         height:'80%',
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     backImage:{
-        backgroundColor:'#06c9f3',
         width:140,
         height:140,
         display:'flex',

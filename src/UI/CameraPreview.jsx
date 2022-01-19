@@ -41,8 +41,14 @@ const CameraPreview = (props, {navigation}) => {
                 }
 
                 <View style={styles.butCont}>
-                    <TouchableOpacity onPress={()=>props.retakePh()}>
-                        <Text style={styles.text}>Retake</Text>
+                    <TouchableOpacity
+                        style={styles.buttonBottom}
+                        onPress={()=>{
+                            props.retakePh()
+                        }}>
+                        <Text style={{fontSize:18, color:'#fff'}}>
+                            Retake
+                        </Text>
                     </TouchableOpacity>
                     {isSaved
                         ?
@@ -100,10 +106,14 @@ const CameraPreview = (props, {navigation}) => {
                                 </View>
                             </View>
                         </Modal>
-                        <TouchableOpacity onPress={()=>{
-                            setModalVisible(true)
-                        }}>
-                            <Text style={styles.text}>Send photo</Text>
+                        <TouchableOpacity
+                            style={styles.buttonBottom}
+                            onPress={()=>{
+                                setModalVisible(true)
+                            }}>
+                            <Text style={{fontSize:18, color:'#fff'}}>
+                                Send photo
+                            </Text>
                         </TouchableOpacity>
                         </View>
                     }
@@ -191,8 +201,17 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: "center"
+    },
+    buttonBottom:{
+        backgroundColor:'#90c900',
+        width:160,
+        height:60,
+        margin:30,
+        borderRadius:30,
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
-
 })
 
 export default CameraPreview;

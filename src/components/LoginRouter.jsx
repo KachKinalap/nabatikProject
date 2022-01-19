@@ -8,9 +8,10 @@ import CameraView from "./CameraView";
 import History from "./History";
 import Settings from "./Settings";
 import Gallery from "../UI/Gallery";
+import AppRouter from "./AppRouter";
 
 const LoginRouter = () => {
-    const [isAuth, setIsAuth] = useState(false)
+    const [isAuth, setIsAuth] = useState(true)
     const Stack = createNativeStackNavigator();
 
     // const slideToMain = ()=>{
@@ -24,26 +25,11 @@ const LoginRouter = () => {
                 {
                     isAuth
                     ?
-                        <Stack.Navigator>
-                            <Stack.Screen
-                                name="MainMenu"
-                                component={MainMenu}
-                            />
-                            <Stack.Screen
-                                name="Camera"
-                                component={CameraView}
-                            />
-                            <Stack.Screen
-                                name="History"
-                                component={Gallery}
-                            />
-                            <Stack.Screen
-                                name="Settings"
-                                component={()=><Settings setIsAuth={setIsAuth}/>}
-                            />
-                        </Stack.Navigator>
+                        <AppRouter setIsAuth={setIsAuth}/>
                     :
-                        <Stack.Navigator>
+                        <Stack.Navigator screenOptions={{
+                            headerShown: false
+                        }}>
                             <Stack.Screen
                                 name="Login"
                                 component={()=><Login setIsAuth={setIsAuth}/>}

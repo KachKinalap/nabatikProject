@@ -29,18 +29,19 @@ const styles = StyleSheet.create({
         alignItems:'flex-start',
     },
     input: {
-        borderColor:'#06c9f3',
+        borderColor:'#90c900',
         borderWidth:2,
         width:250,
         height:40,
         fontSize:20,
         marginTop:10,
         paddingLeft:10,
-        paddingRight:10
+        paddingRight:10,
+        borderRadius:4
     },
     inputText: {
         marginTop:20,
-        fontSize:20,
+        fontSize:18,
 
     }
 })

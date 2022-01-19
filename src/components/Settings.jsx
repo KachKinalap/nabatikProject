@@ -56,10 +56,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'space-around',
         alignItems:'center',
-        backgroundColor:'#06c9f3'
     },
     backImage:{
-        backgroundColor:'#06c9f3',
         width:140,
         height:140,
         display:'flex',
@@ -69,6 +67,7 @@ const styles = StyleSheet.create({
     },
     labelItem:{
         fontSize:16,
+        marginRight:15
     },
     centeredView: {
         flex: 1,

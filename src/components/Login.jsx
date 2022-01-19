@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import PostService from '../API/PostService'
 import MyInput from "../UI/MyInput";
 import '@react-navigation/native'
+import {ImageBackground} from "react-native-web";
 
 const Login = (props, {navigation}) => {
 
@@ -29,7 +30,13 @@ const Login = (props, {navigation}) => {
 
     return (
         <View style={styles.container}>
-            <Text style={{fontSize:24, marginBottom:40}}>Welcome to the Nabatik project!</Text>
+            <Image source={require('../Images/logoNab.png')}/>
+            <View>
+                <Image
+                    source={require('../Images/logoText.png')}
+                    style={styles.logoText}
+                />
+            </View>
             <MyInput
                 value={login}
                 secure={false}
@@ -48,7 +55,7 @@ const Login = (props, {navigation}) => {
                     Auth(login, pass)
 
                 }}>
-                <Text style={{fontSize:18}}>
+                <Text style={{fontSize:18, color:'#fff'}}>
                     Enter
                 </Text>
             </TouchableOpacity>
@@ -63,14 +70,21 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     button:{
-        backgroundColor:'#06c9f3',
+        backgroundColor:'#90c900',
         width:160,
         height:60,
         margin:30,
-        borderRadius:6,
+        borderRadius:30,
         display:'flex',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    logoText:{
+        flex: 1,
+        width:160,
+        maxHeight:60,
+        resizeMode:'contain',
+        marginBottom:60
     }
 })
 

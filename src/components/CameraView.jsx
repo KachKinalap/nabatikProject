@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Camera } from 'expo-camera';
 import CameraPreview from "../UI/CameraPreview";
-import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Modal, Image} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
 
 const CameraView = localUri => {
@@ -75,23 +75,15 @@ const CameraView = localUri => {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => {
-                                setType(
-                                    type === Camera.Constants.Type.back
-                                        ? Camera.Constants.Type.front
-                                        : Camera.Constants.Type.back
-                                );
-                            }}>
-                            <Text style={styles.text}> Flip </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
                             onPress={async () => {
                                 const photo = await camera.takePictureAsync();
                                 setPreviewVisible(true)
                                 setCapturedImage(photo)
                             }}>
-                            <Text style={styles.text}> Take a photo </Text>
+                            <Image
+                                source={require('../Images/cameraButton.png')}
+                                style={styles.logoText}
+                            />
                         </TouchableOpacity>
                     </View>
                 </Camera>
@@ -122,6 +114,13 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: 'white',
     },
+    logoText:{
+        flex: 1,
+        width:100,
+        maxHeight:100,
+        resizeMode:'contain',
+        marginBottom:20
+    }
 });
 
 export default CameraView;
