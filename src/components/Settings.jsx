@@ -67,7 +67,9 @@ const styles = StyleSheet.create({
     },
     labelItem:{
         fontSize:16,
-        marginRight:15
+        marginRight:15,
+        color:'#90c900',
+        fontWeight:'700'
     },
     centeredView: {
         flex: 1,
@@ -100,22 +102,23 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        margin:20
+        margin:20,
     },
     buttonOpen: {
-        backgroundColor: "#06c9f3",
+        backgroundColor: "#90c900",
     },
     buttonClose: {
-        backgroundColor: "#06c9f3",
+        backgroundColor: "#90c900",
     },
     textStyle: {
         color: "white",
         fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize:20
     }
 })
 

@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { Camera } from 'expo-camera';
 import CameraPreview from "../UI/CameraPreview";
-import {View, Text, TouchableOpacity, StyleSheet, Modal, Image} from 'react-native'
+import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
 
-const CameraView = localUri => {
+const CameraView = (props) => {
 
-    //perm to use camera, front or back
+    //perm to use camera
     const [hasPermission, setHasPermission] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
 
     //shows photo's preview and saves params(w,h,uri)
     const [previewVisible, setPreviewVisible] = useState(false)
@@ -27,7 +26,6 @@ const CameraView = localUri => {
     const savePhoto = async (uri) => {
         await requestPermission()
         if(status.status === 'granted'){
-            //await MediaLibrary.saveToLibraryAsync(uri)
             const asset = await MediaLibrary.createAssetAsync(uri);
             await MediaLibrary.createAlbumAsync(nameAlbum, asset, false)
                 .then(() => {
@@ -63,11 +61,11 @@ const CameraView = localUri => {
                     retakePh={retakePhoto}
                     savePh={savePhoto}
                     album={nameAlbum}
+                    coord={props.coord}
                 />
                 :
                 <Camera
                     style={styles.camera}
-                    type={type}
                     ref={(ref) => {
                         camera=ref
                     }}

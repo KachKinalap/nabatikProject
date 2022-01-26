@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View, Alert, Modal} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
 import MyInput from "./MyInput";
+import PostService from "../API/PostService";
 
 const CameraPreview = (props, {navigation}) => {
 
@@ -37,7 +38,7 @@ const CameraPreview = (props, {navigation}) => {
                 </View>
 
                  :
-                 console.log("lol")
+                    console.log('lol')
                 }
 
                 <View style={styles.butCont}>
@@ -85,11 +86,12 @@ const CameraPreview = (props, {navigation}) => {
                                         <TouchableOpacity
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={() => {
-                                                if((typeof (+trunkDiam))==='number' && (typeof (+treeHeight))==='number' && trunkDiam!=='' && treeHeight !=='' && trunkDiam !== NaN && treeHeight !== NaN){
+                                                if((typeof (+trunkDiam))==='number' && (typeof (+treeHeight))==='number' && trunkDiam!=='' && treeHeight !==''){
                                                 setModalVisible(!modalVisible)
                                                 setModal2Visible(true)
                                                 props.savePh(props.photo.uri)
                                                 setIsSaved(true)
+                                                //PostService.postPhoto(props.photo.uri, props.coord, trunkDiam, treeHeight)
                                                 }
 
                                             }}
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F194FF",
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#90c900",
     },
     textStyle: {
         color: "white",
@@ -200,7 +202,8 @@ const styles = StyleSheet.create({
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
+        textAlign: "center",
+        fontSize:20
     },
     buttonBottom:{
         backgroundColor:'#90c900',

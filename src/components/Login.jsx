@@ -3,29 +3,20 @@ import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image} from
 import PostService from '../API/PostService'
 import MyInput from "../UI/MyInput";
 import '@react-navigation/native'
-import {ImageBackground} from "react-native-web";
 
-const Login = (props, {navigation}) => {
+const Login = (props) => {
 
-    const [token, setToken] = useState('')
-    const [login, setLogin] = useState('')
-    const [pass, setPass] = useState('')
+    const [login, setLogin] = useState('testplanter@nabatik.com')
+    const [pass, setPass] = useState('testplanter')
 
     const Auth = async (userLogin, password)=> {
         const response =  await PostService.getToken(userLogin, password)
-        console.log(response)
-        if(response.data.success===true)
+
+        if(response.data.success===true){
+            props.setToken(response.data.response.token)
             props.setIsAuth(true)
-        else
-        {}
-        // navigation.navigate('MainMenu')
-        // // we should remove arrow "back"
-        // navigation.reset(
-        //     {
-        //         index: 0,
-        //         routes: [{ name: 'MainMenu' }],
-        //     }
-        // )
+        }
+
     }
 
     return (

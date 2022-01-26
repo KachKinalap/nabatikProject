@@ -3,10 +3,9 @@ import React, {useState} from "react";
 import LoginRouter from "./src/components/LoginRouter";
 import * as Font from 'expo-font';
 
-
 export default function App() {
-  // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-  // LogBox.ignoreAllLogs();//Ignore all log notifications
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   return (
           <SafeAreaView style={styles.container}>
             <LoginRouter/>

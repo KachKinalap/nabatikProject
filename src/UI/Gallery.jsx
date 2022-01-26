@@ -13,6 +13,11 @@ const Gallery = (props) => {
     //photos
     const [assets, setAssets] = useState(null)
 
+    //whether photoPreview or not
+    const [isPreview, setIsPreview] = useState(false)
+    const [deleted, setDeleted] = useState(false)
+    const [currPhoto, setCurrPhoto] = useState(null)
+
     //getting photos for preview
     const getAsset = async ()=>{
         const getAlbum = await MediaLibrary.getAlbumAsync(nameAlbum)
@@ -24,11 +29,9 @@ const Gallery = (props) => {
     }
     useEffect(()=>{
         getAsset()
-    },[])
+    },[deleted])
 
-    //whether photoPreview or not
-    const [isPreview, setIsPreview] = useState(false)
-    const [currPhoto, setCurrPhoto] = useState(null)
+
     return (
             <SafeAreaView>
                 {
@@ -49,7 +52,15 @@ const Gallery = (props) => {
                                             setCurrPhoto(asset)
                                             setIsPreview(true)
                                     }}>
-                                        <GalleryItem currPhoto={asset} key={asset.filename}/>
+                                        <GalleryItem
+                                            deleted={deleted}
+                                            setDeleted={setDeleted}
+                                            currPhoto={asset}
+                                            key={asset.filename}
+                                            nameAlbum={nameAlbum}
+                                            token={props.token}
+                                            coord={props.coord}
+                                        />
                                     </TouchableOpacity>
                                 )
                             }

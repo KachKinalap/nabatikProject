@@ -3,15 +3,12 @@ import {View, Text, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./Login";
-import MainMenu from "./MainMenu";
-import CameraView from "./CameraView";
-import History from "./History";
-import Settings from "./Settings";
-import Gallery from "../UI/Gallery";
 import AppRouter from "./AppRouter";
 
 const LoginRouter = () => {
-    const [isAuth, setIsAuth] = useState(true)
+    const [isAuth, setIsAuth] = useState(false)
+    const [token, setToken] = useState('')
+
     const Stack = createNativeStackNavigator();
 
     // const slideToMain = ()=>{
@@ -25,14 +22,14 @@ const LoginRouter = () => {
                 {
                     isAuth
                     ?
-                        <AppRouter setIsAuth={setIsAuth}/>
+                        <AppRouter setIsAuth={setIsAuth} token={token}/>
                     :
                         <Stack.Navigator screenOptions={{
                             headerShown: false
                         }}>
                             <Stack.Screen
                                 name="Login"
-                                component={()=><Login setIsAuth={setIsAuth}/>}
+                                component={()=><Login setIsAuth={setIsAuth} setToken={setToken}/>}
                             />
                         </Stack.Navigator>
                 }
