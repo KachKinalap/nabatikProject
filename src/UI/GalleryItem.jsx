@@ -21,7 +21,8 @@ const GalleryItem = (props) => {
                             // const getAlbum = await MediaLibrary.getAlbumAsync(props.nameAlbum)
                             // const result = await MediaLibrary.removeAssetsFromAlbumAsync(props.currPhoto, getAlbum)
                             // props.setDeleted(!props.deleted)
-                            const response = await PostService.postPhoto(props.currPhoto.uri, props.coord, props.token, 2.0, 1.0)
+                            console.log(props.currPhoto)
+                            const response = await PostService.postPhoto(props.currPhoto, props.coord, props.token, 2.0, 1.0)
                             //console.log('response', response)
 
                         }}>
