@@ -28,7 +28,7 @@ const CameraView = (props, {navigation}) => {
     //name of our user app's folder
     const nameAlbum = 'TreesNabatikProject'
 
-    const savePhoto = async (uri, success) => {
+    const savePhoto = async (uri, success, location, tD, tH) => {
         await requestPermission()
         if(status.status === 'granted'){
             const asset = await MediaLibrary.createAssetAsync(uri);
@@ -36,8 +36,13 @@ const CameraView = (props, {navigation}) => {
             await MediaLibrary.createAlbumAsync(nameAlbum, asset, false)
                 .then(async () => {
                     console.log('File Saved Successfully!');
-                    await AsyncStorage.setItem(asset.uri.split('/')[asset.uri.split('/').length-1], success)
-                    console.log('set this fucking state\t', asset.uri)
+                    if(success === "sent"){
+                        await AsyncStorage.setItem(asset.uri.split('/')[asset.uri.split('/').length-1], success)
+                    }
+                    else{
+                        const imgJSON = JSON.stringify({success, location, tD, tH})
+                        await AsyncStorage.setItem(asset.uri.split('/')[asset.uri.split('/').length-1], imgJSON)
+                    }
                 })
                 .catch(() => {
                     console.log('Error In Saving File!');
@@ -50,7 +55,7 @@ const CameraView = (props, {navigation}) => {
             const { status } = await Camera.requestPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
-    }, [navigation]);
+    }, []);
 
     if (hasPermission === null) {
         return <View style={{width:'100%', height:'100%', backgroundColor:'#ff0000'}}/>;
@@ -98,10 +103,9 @@ const CameraView = (props, {navigation}) => {
                                     }catch (err){
                                         console.log(err)
                                     }
-                                    console.log(await AsyncStorage.getAllKeys())
                                     setPreviewVisible(true)
                                     setCapturedImage(photo)
-
+                                    //props.setChanger(!props.changer)
                                 }}>
                                 <Image
                                     source={require('../Images/cameraButton.png')}

@@ -11,10 +11,10 @@ const AppRouter = (props) => {
 
     const [location, setLocation] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null)
-
+    const [changer, setChanger] = useState(false)
     useEffect(()=>{
         GetGeo.getCoord(setErrorMsg, setLocation)
-    },[])
+    },[changer])
 
     return (
         <Tab.Navigator
@@ -40,7 +40,7 @@ const AppRouter = (props) => {
                 unmountOnBlur:true
             })}
         >
-            <Tab.Screen name="Camera" component={()=><CameraView token={props.token} coord={location}/>}/>
+            <Tab.Screen name="Camera" component={()=><CameraView changer={changer} setChanger={setChanger} token={props.token} coord={location}/>}/>
             <Tab.Screen name="History" component={()=><Gallery token={props.token} coord={location}/>} />
             <Tab.Screen name="Settings" component={()=><Settings setIsAuth={props.setIsAuth}/>} />
         </Tab.Navigator>

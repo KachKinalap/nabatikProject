@@ -9,12 +9,27 @@ const GalleryItem = (props) => {
         width: "100%",
         height: "100%"
     };
+    const [json, setJson] = useState('')
     const [status, setStatus] = useState('')
+    const [place, setPlace] = useState('')
+    const [trunkDiam, setTrunkDiam] = useState('')
+    const [treeHeight, setTreeHeight] = useState('')
 
     useEffect(()=>{
         AsyncStorage.getItem(props.currPhoto.uri.split('/')[props.currPhoto.uri.split('/').length-1])
             .then((item)=>{
-                setStatus(item)
+                if(item==="sent"){
+                    setStatus(item)
+                }
+                else{
+                    setJson(item)
+                    const myItem = JSON.parse(item)
+                    setStatus(myItem.success)
+                    setPlace(item.location)
+                    setTrunkDiam(item.tD)
+                    setTreeHeight(item.tH)
+                }
+
             })
     }, [])
 
@@ -25,16 +40,25 @@ const GalleryItem = (props) => {
                     source={img}
                 >
                 <View style={styles.viewStatus}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={async ()=>{
-                            const response = await PostService.postPhoto(props.currPhoto, props.coord, props.token, 2, 1)
-                            console.log('response', response)
-                        }}>
-                        <Text style={{fontSize:18, color:'#fff'}}>
-                            Send
-                        </Text>
-                    </TouchableOpacity>
+                    {status === "sent"
+                        ?
+                        console.log("all's okay'")
+                        :
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={async ()=>{
+                                setStatus("sending")
+                                const response = await PostService.postPhoto(props.currPhoto, place, props.token, trunkDiam, treeHeight)
+                                setStatus("sent")
+                                await AsyncStorage.setItem(props.currPhoto.uri.split('/')[props.currPhoto.uri.split('/').length-1], "sent")
+                                console.log('response', response)
+                            }}>
+                            <Text style={{fontSize:18, color:'#fff'}}>
+                                Send
+                            </Text>
+                        </TouchableOpacity>
+                    }
+
                     <TouchableOpacity style={status==='sent'?styles.status:styles.statusNot}>
                         <Text style={{color:'#fff'}}>
                             {status}

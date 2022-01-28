@@ -5,6 +5,7 @@ import MyInput from "./MyInput";
 import PostService from "../API/PostService";
 import Loader from "./Loader";
 
+
 const CameraPreview = (props, {navigation}) => {
 
     //state for loader
@@ -112,7 +113,7 @@ const CameraPreview = (props, {navigation}) => {
                                                     else{
                                                         setModal2Text('NetworkError! Photo will be sent later in background')
                                                         setModal2Visible(true)
-                                                        props.savePh(props.photo.uri, "not_sent")
+                                                        props.savePh(props.photo.uri, "not_sent", props.coord, trunkDiam, treeHeight)
                                                         }
 
                                                     setIsSaved(true)

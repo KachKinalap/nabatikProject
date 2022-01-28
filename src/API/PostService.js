@@ -1,4 +1,6 @@
 import axios from "axios";
+import {Platform} from "react-native";
+
 export default class PostService {
 
     static async getToken(login, pass) {
@@ -13,7 +15,8 @@ export default class PostService {
         let myToken = 'access_token=' + token
         let formData = new FormData()
         formData.append('images', {
-            uri:image.uri,
+
+            uri: image.uri,
             name:image.filename?image.filename:image.uri.split('/')[image.uri.split('/').length-1],
             type:'image/jpg'
         });
