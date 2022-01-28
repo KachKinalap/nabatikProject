@@ -3,6 +3,7 @@ import { Camera } from 'expo-camera';
 import CameraPreview from "../UI/CameraPreview";
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CameraView = (props) => {
 
@@ -23,13 +24,16 @@ const CameraView = (props) => {
     //name of our user app's folder
     const nameAlbum = 'TreesNabatikProject'
 
-    const savePhoto = async (uri) => {
+    const savePhoto = async (uri, success) => {
         await requestPermission()
         if(status.status === 'granted'){
             const asset = await MediaLibrary.createAssetAsync(uri);
+
             await MediaLibrary.createAlbumAsync(nameAlbum, asset, false)
-                .then(() => {
+                .then(async () => {
                     console.log('File Saved Successfully!');
+                    await AsyncStorage.setItem(asset.uri.split('/')[asset.uri.split('/').length-1], success)
+                    console.log('set this fucking state\t', asset.uri)
                 })
                 .catch(() => {
                     console.log('Error In Saving File!');
@@ -62,6 +66,7 @@ const CameraView = (props) => {
                     savePh={savePhoto}
                     album={nameAlbum}
                     coord={props.coord}
+                    token={props.token}
                 />
                 :
                 <Camera

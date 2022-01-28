@@ -39,7 +39,7 @@ const AppRouter = (props) => {
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Camera" component={()=><CameraView coord={location}/>}/>
+            <Tab.Screen name="Camera" component={()=><CameraView token={props.token} coord={location}/>}/>
             <Tab.Screen name="History" component={()=><Gallery token={props.token} coord={location}/>} />
             <Tab.Screen name="Settings" component={()=><Settings setIsAuth={props.setIsAuth}/>} />
         </Tab.Navigator>

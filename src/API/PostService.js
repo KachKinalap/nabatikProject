@@ -10,26 +10,14 @@ export default class PostService {
 
     static async postPhoto(image, point, token, trunk_diameter, tree_height) {
 
-        //if (images && images.length > 0) {
-            //for(let i = 0; i < images.length; i++) {
-                //formData.append('images', {uri: image, name: 'photo.png', type: 'image/png'});
-
-            //}
-        //}
-
         let myToken = 'access_token=' + token
         let formData = new FormData()
-        formData.append('images', {uri:image.uri, name:image.filename, type:'image/jpg'});
-        //formData.append('images', image)
-        //formData.append('Content-Type', 'image/jpg')
-        console.log(point, trunk_diameter, tree_height);
-        // axios.interceptors.request.use(function (config) {
-        //     // Do something before request is sent
-        //     console.log(config)
-        // }, function (error) {
-        //     // Do something with request error
-        //     //console.log(error)
-        // });
+        formData.append('images', {
+            uri:image.uri,
+            name:image.filename?image.filename:image.uri.split('/')[image.uri.split('/').length-1],
+            type:'image/jpg'
+        });
+
         try{
             let response = await axios.post('https://development.nabatik.com/api/v1.0/planter/plant', formData, {
                 maxBodyLength:8000000,
@@ -40,11 +28,9 @@ export default class PostService {
                     tree_height: tree_height
                 },
                 headers: {
-                    //"Content-Type": "form-data",
                     "Cookie":myToken
                 }
             });
-
                 return response
         } catch(error){
             console.log('error', error)

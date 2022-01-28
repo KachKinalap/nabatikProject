@@ -3,9 +3,9 @@ import {SafeAreaView, Text, StyleSheet, ScrollView, FlatList, TouchableOpacity} 
 import * as MediaLibrary from "expo-media-library";
 import GalleryItem from "./GalleryItem";
 import PhotoPreview from "./PhotoPreview";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const Gallery = (props) => {
+const Gallery = (props, {navigation}) => {
 
     //need change to name from CameraView
     const nameAlbum = 'TreesNabatikProject'
@@ -21,15 +21,18 @@ const Gallery = (props) => {
     //getting photos for preview
     const getAsset = async ()=>{
         const getAlbum = await MediaLibrary.getAlbumAsync(nameAlbum)
-        const result = await MediaLibrary.getAssetsAsync({
-            album: getAlbum,
-            sortBy:['creationTime']
-        })
-        setAssets(result.assets)
+        if(getAlbum){
+            const result = await MediaLibrary.getAssetsAsync({
+                album: getAlbum,
+                sortBy:['creationTime']
+            })
+            setAssets(result.assets)
+        }
     }
+
     useEffect(()=>{
-        getAsset()
-    },[deleted])
+        getAsset().then(console.log('gotAsset'))
+    },[deleted, navigation])
 
 
     return (
@@ -48,7 +51,7 @@ const Gallery = (props) => {
                                 assets.map(asset =>
                                     <TouchableOpacity
                                         style={{marginTop:10}}
-                                        onPress={()=>{
+                                        onPress={async ()=>{
                                             setCurrPhoto(asset)
                                             setIsPreview(true)
                                     }}>

@@ -6,27 +6,36 @@ import PostService from "../API/PostService";
 
 const CameraPreview = (props, {navigation}) => {
 
-    const getAsset = async ()=>{
-        const getAlbum = await MediaLibrary.getAlbumAsync(props.album)
-        const assets = await MediaLibrary.getAssetsAsync({
-            album: getAlbum,
-            sortBy:['creationTime']
-        })
-    }
+    // const getAsset = async ()=>{
+    //     const getAlbum = await MediaLibrary.getAlbumAsync(props.album)
+    //     const assets = await MediaLibrary.getAssetsAsync({
+    //         album: getAlbum,
+    //         sortBy:['creationTime']
+    //     })
+    // }
+
+
 
     const [isSaved, setIsSaved] = useState(false)
     //modal for params
     const [modalVisible, setModalVisible] = useState(false);
-    //photo has saved
+    //photo has saved or not modal(1) and modal text(2)
     const [modal2Visible, setModal2Visible] = useState(false);
+    const [modal2Text, setModal2Text] = useState(false);
+
     if(modal2Visible){
         setTimeout(()=>{setModal2Visible(false)},2000)
     }
-    getAsset()
+    //getAsset()
 
     //states for additional params
     const [trunkDiam, setTrunkDiam] = useState('')
     const [treeHeight, setTreeHeight] = useState('')
+
+    const pushPhoto = async (tD, tH) => {
+        const response = await PostService.postPhoto(props.photo, props.coord, props.token, tD, tH)
+        return response
+    }
 
     return (
         <View style={styles.previewCont}>
@@ -34,7 +43,7 @@ const CameraPreview = (props, {navigation}) => {
                 {modal2Visible
                  ?
                 <View style={styles.popup}>
-                    <Text style={styles.popupText}>Photo has sent on server!</Text>
+                    <Text style={styles.popupText}>{modal2Text}</Text>
                 </View>
 
                  :
@@ -85,13 +94,24 @@ const CameraPreview = (props, {navigation}) => {
                                     <View style={styles.buttonWrap}>
                                         <TouchableOpacity
                                             style={[styles.button, styles.buttonClose]}
-                                            onPress={() => {
+                                            onPress={async () => {
                                                 if((typeof (+trunkDiam))==='number' && (typeof (+treeHeight))==='number' && trunkDiam!=='' && treeHeight !==''){
+
+                                                const response = await pushPhoto(trunkDiam, treeHeight)
+                                                if(response){
+                                                    if(response.data.success===true){
+                                                        setModal2Text('Photo has sent on server!')
+                                                        setModal2Visible(true)
+                                                        props.savePh(props.photo.uri, "sent")
+                                                    }
+                                                }
+                                                else{
+                                                    setModal2Text('NetworkError! Photo will be sent later in background')
+                                                    setModal2Visible(true)
+                                                    props.savePh(props.photo.uri, "not_sent")
+                                                    }
                                                 setModalVisible(!modalVisible)
-                                                setModal2Visible(true)
-                                                props.savePh(props.photo.uri)
                                                 setIsSaved(true)
-                                                //PostService.postPhoto(props.photo.uri, props.coord, trunkDiam, treeHeight)
                                                 }
 
                                             }}

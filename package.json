@@ -32,7 +32,8 @@
     "react-native-tip": "^0.0.18",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
-    "tough-cookie": "^4.0.0"
+    "tough-cookie": "^4.0.0",
+    "@react-native-async-storage/async-storage": "~1.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
