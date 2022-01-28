@@ -4,8 +4,12 @@ import CameraPreview from "../UI/CameraPreview";
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native'
 import * as MediaLibrary from "expo-media-library";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from "../UI/Loader";
 
-const CameraView = (props) => {
+const CameraView = (props, {navigation}) => {
+
+    //loader's state
+    const [loaderActive, setLoaderActive] = useState(false)
 
     //perm to use camera
     const [hasPermission, setHasPermission] = useState(null);
@@ -46,13 +50,13 @@ const CameraView = (props) => {
             const { status } = await Camera.requestPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
-    }, []);
+    }, [navigation]);
 
     if (hasPermission === null) {
-        return <View />;
+        return <View style={{width:'100%', height:'100%', backgroundColor:'#ff0000'}}/>;
     }
     if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
+        return <View style={{width:'100%', height:'100%', backgroundColor:'#ff0000'}}><Text>No access to camera</Text></View>;
     }
     // var for camera object
     let camera
@@ -75,20 +79,38 @@ const CameraView = (props) => {
                         camera=ref
                     }}
                 >
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={async () => {
-                                const photo = await camera.takePictureAsync();
-                                setPreviewVisible(true)
-                                setCapturedImage(photo)
-                            }}>
-                            <Image
-                                source={require('../Images/cameraButton.png')}
-                                style={styles.logoText}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                    {loaderActive
+                        ?
+                        <View style={styles.loader}>
+                            <Loader/>
+                        </View>
+
+                        :
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={async () => {
+                                    let photo=''
+                                    try{
+                                        setLoaderActive(true)
+                                        photo = await camera.takePictureAsync();
+                                        setLoaderActive(false)
+                                    }catch (err){
+                                        console.log(err)
+                                    }
+                                    console.log(await AsyncStorage.getAllKeys())
+                                    setPreviewVisible(true)
+                                    setCapturedImage(photo)
+
+                                }}>
+                                <Image
+                                    source={require('../Images/cameraButton.png')}
+                                    style={styles.logoText}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    }
+
                 </Camera>
             }
         </View>
@@ -123,6 +145,11 @@ const styles = StyleSheet.create({
         maxHeight:100,
         resizeMode:'contain',
         marginBottom:20
+    },
+    loader:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems: 'center'
     }
 });
 

@@ -3,6 +3,7 @@ import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image} from
 import PostService from '../API/PostService'
 import MyInput from "../UI/MyInput";
 import '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
 
@@ -14,6 +15,7 @@ const Login = (props) => {
 
         if(response.data.success===true){
             props.setToken(response.data.response.token)
+            await AsyncStorage.setItem('access_token', response.data.response.token)
             props.setIsAuth(true)
         }
 

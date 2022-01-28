@@ -31,7 +31,7 @@ const Gallery = (props, {navigation}) => {
     }
 
     useEffect(()=>{
-        getAsset().then(console.log('gotAsset'))
+        getAsset().then(console.log('switched to gallery'))
     },[deleted, navigation])
 
 

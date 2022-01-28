@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Modal, Alert} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Settings = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -23,6 +24,7 @@ const Settings = (props) => {
                                     style={[styles.button, styles.buttonClose]}
                                     onPress={() => {
                                         setModalVisible(!modalVisible)
+                                        AsyncStorage.removeItem('access_token')
                                         props.setIsAuth(false)
                                     }}
                                 >

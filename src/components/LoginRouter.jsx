@@ -1,15 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "./Login";
 import AppRouter from "./AppRouter";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginRouter = () => {
     const [isAuth, setIsAuth] = useState(false)
     const [token, setToken] = useState('')
 
     const Stack = createNativeStackNavigator();
+
+
+    AsyncStorage.getItem('access_token')
+        .then((resolve)=>{
+            if(resolve){
+                setIsAuth(true)
+            }
+        })
 
     // const slideToMain = ()=>{
     //     navigation.navigate('MainMenu')

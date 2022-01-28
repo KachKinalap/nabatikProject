@@ -37,6 +37,7 @@ const AppRouter = (props) => {
                 },
                 tabBarActiveTintColor: '#90C900',
                 tabBarInactiveTintColor: 'gray',
+                unmountOnBlur:true
             })}
         >
             <Tab.Screen name="Camera" component={()=><CameraView token={props.token} coord={location}/>}/>

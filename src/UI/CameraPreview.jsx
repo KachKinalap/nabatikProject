@@ -3,18 +3,12 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View, Alert, Modal}
 import * as MediaLibrary from "expo-media-library";
 import MyInput from "./MyInput";
 import PostService from "../API/PostService";
+import Loader from "./Loader";
 
 const CameraPreview = (props, {navigation}) => {
 
-    // const getAsset = async ()=>{
-    //     const getAlbum = await MediaLibrary.getAlbumAsync(props.album)
-    //     const assets = await MediaLibrary.getAssetsAsync({
-    //         album: getAlbum,
-    //         sortBy:['creationTime']
-    //     })
-    // }
-
-
+    //state for loader
+    const [loaderActive, setLoaderActive] = useState(false)
 
     const [isSaved, setIsSaved] = useState(false)
     //modal for params
@@ -48,6 +42,14 @@ const CameraPreview = (props, {navigation}) => {
 
                  :
                     console.log('lol')
+                }
+                {loaderActive
+                    ?
+                    <View>
+                        <Loader/>
+                    </View>
+                    :
+                    console.log('loader inactive')
                 }
 
                 <View style={styles.butCont}>
@@ -96,22 +98,24 @@ const CameraPreview = (props, {navigation}) => {
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={async () => {
                                                 if((typeof (+trunkDiam))==='number' && (typeof (+treeHeight))==='number' && trunkDiam!=='' && treeHeight !==''){
-
-                                                const response = await pushPhoto(trunkDiam, treeHeight)
-                                                if(response){
-                                                    if(response.data.success===true){
-                                                        setModal2Text('Photo has sent on server!')
+                                                    setModalVisible(!modalVisible)
+                                                    setLoaderActive(true)
+                                                    const response = await pushPhoto(trunkDiam, treeHeight)
+                                                    setLoaderActive(false)
+                                                    if(response){
+                                                        if(response.data.success===true){
+                                                            setModal2Text('Photo has sent on server!')
+                                                            setModal2Visible(true)
+                                                            props.savePh(props.photo.uri, "sent")
+                                                        }
+                                                    }
+                                                    else{
+                                                        setModal2Text('NetworkError! Photo will be sent later in background')
                                                         setModal2Visible(true)
-                                                        props.savePh(props.photo.uri, "sent")
-                                                    }
-                                                }
-                                                else{
-                                                    setModal2Text('NetworkError! Photo will be sent later in background')
-                                                    setModal2Visible(true)
-                                                    props.savePh(props.photo.uri, "not_sent")
-                                                    }
-                                                setModalVisible(!modalVisible)
-                                                setIsSaved(true)
+                                                        props.savePh(props.photo.uri, "not_sent")
+                                                        }
+
+                                                    setIsSaved(true)
                                                 }
 
                                             }}
@@ -174,7 +178,8 @@ const styles = StyleSheet.create({
     },
     popupText:{
         fontSize: 24,
-        color:'white'
+        color:'white',
+        textAlign:'center'
     },
     centeredView: {
         flex: 1,

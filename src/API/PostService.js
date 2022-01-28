@@ -34,19 +34,7 @@ export default class PostService {
                 return response
         } catch(error){
             console.log('error', error)
-
         }
-
-
-
     }
-
 }
 
-/*
-{{api_url}}/planter/plant?
-point={"type":"Feature","geometry":
-{"type":"Point","coordinates":[36.0743169,52.9882371]}}
-&trunk_diameter=2.0
-&tree_height=1.0
- */
