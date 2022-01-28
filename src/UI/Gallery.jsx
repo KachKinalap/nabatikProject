@@ -21,13 +21,15 @@ const Gallery = (props, {navigation}) => {
     //getting photos for preview
     const getAsset = async ()=>{
         const getAlbum = await MediaLibrary.getAlbumAsync(nameAlbum)
+        let result = {}
         if(getAlbum){
-            const result = await MediaLibrary.getAssetsAsync({
+            result = await MediaLibrary.getAssetsAsync({
                 album: getAlbum,
                 sortBy:['creationTime']
             })
-            setAssets(result.assets)
+
         }
+        setAssets(result.assets)
     }
 
     useEffect(()=>{

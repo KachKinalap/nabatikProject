@@ -125,3 +125,10 @@ const styles = StyleSheet.create({
 })
 
 export default Settings;
+
+
+/*
+AsyncStorage.getAllKeys()
+                                            .then(keys => AsyncStorage.multiRemove(keys))
+                                            .then(() => alert('success'));
+ */

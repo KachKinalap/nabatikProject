@@ -32,7 +32,7 @@ const GalleryItem = (props) => {
                             console.log('response', response)
                         }}>
                         <Text style={{fontSize:18, color:'#fff'}}>
-                            Delete
+                            Send
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={status==='sent'?styles.status:styles.statusNot}>
